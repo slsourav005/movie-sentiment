@@ -1,95 +1,79 @@
 # Movie Review Sentiment Analysis
 
-An end-to-end NLP project that classifies movie reviews as **Positive** or **Negative** using a fine-tuned BERT model.
+Paste in a movie review, and this app tells you whether it's positive or negative, plus how sure it is about that.
 
-## Features
+Under the hood, it's a `bert-base-cased` model fine-tuned on IMDb reviews, served with FastAPI, with a small React frontend on top. I built it to learn the whole path from training a model to getting it in front of a user.
 
-- Fine-tuned BERT (`bert-base-cased`) for sentiment classification.
-- FastAPI backend for serving predictions.
-- React-based frontend for user interaction.
-- Confidence score returned with every prediction.
-- Model hosted on Hugging Face.
+## What's inside
 
-## Tech Stack
+- A fine-tuned BERT classifier for positive/negative sentiment
+- A FastAPI backend with a single `/predict` endpoint
+- A React + Tailwind frontend for trying reviews in the browser
+- A confidence score with every prediction
+- The trained model on Hugging Face, so there's no need to retrain it: [slsourav005/movie-sentiment](https://huggingface.co/slsourav005/movie-sentiment)
 
-- **Machine Learning:** Python, PyTorch, Hugging Face Transformers
+## Built with
+
+- **ML:** Python, PyTorch, Hugging Face Transformers
 - **Backend:** FastAPI, Pydantic
 - **Frontend:** React, HTML, Tailwind CSS
-- **Model:** BERT (`bert-base-cased`)
-- **Dataset:** IMDb Movie Reviews
+- **Data:** IMDb Movie Reviews
 
-## Project Structure
+## Project layout
 
-```text
+```
 movie-sentiment/
 ├── backend/
-│   ├── main.py
+│   ├── main.py              # FastAPI app and prediction logic
 │   └── requirements.txt
 ├── frontend/
-│   └── index.html
+│   └── index.html           # The UI
 ├── notebooks/
 │   ├── README.md
-│   └── model_training.ipynb
+│   └── model_training.ipynb # How the model was fine-tuned
 ├── .gitignore
 └── README.md
 ```
-
-## Model
-
-The fine-tuned model is available on Hugging Face:
-
-[View Movie Sentiment Model](https://huggingface.co/slsourav005/movie-sentiment)
-
-## API Endpoint
-
-**POST** `/predict`
-
-Request:
-
-```json
-{
-  "text": "This movie was amazing!"
-}
-```
-
-Response:
-
-```json
-{
-  "sentiment": "Positive",
-  "confidence": 0.98
-}
-```
-
-*The confidence value above is an illustrative example.*
-
-## Running Locally
-
-### 1. Clone the repository
-
 ```bash
-git clone https://github.com/slsourav005/movie-sentiment.git
+## Try it locally
+
+
+# 1. Clone the repo
+git clone - https://github.com/slsourav005/movie-sentiment.git
 cd movie-sentiment
-```
 
-### 2. Install backend dependencies
-
-```bash
+# 2. Install backend dependencies
 pip install -r backend/requirements.txt
-```
 
-### 3. Start the FastAPI server
-
-```bash
+# 3. Start the server
 uvicorn backend.main:app --reload
 ```
 
-### 4. Open the frontend
+Then open `frontend/index.html` in your browser. Keep the server running so the page can reach it.
 
-Open `frontend/index.html` in your browser and connect it to the running backend.
+## Using the API
 
-## Future Improvements
+Send a `POST` request to `/predict`:
 
-- Deploy the backend and frontend.
-- Improve model evaluation and add performance metrics.
-- Add support for batch predictions.
+```json
+{ "text": "This movie was amazing!" }
+```
+
+You'll get back:
+
+```json
+{ "sentiment": "Positive", "confidence": 0.98 }
+```
+
+The confidence value here is just an example. Real scores will vary with the input.
+
+## Still on my to-do list
+
+- Deploy the backend and frontend so people can try it without setting anything up
+- Properly evaluate the model and report accuracy, precision, recall, and F1
+- Support batch predictions
+
+## About
+
+Made by [Sourav Shil](https://github.com/slsourav005). Feedback and suggestions are welcome.
+
